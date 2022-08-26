@@ -2,18 +2,20 @@
  * @jest-environment jsdom
  */
 
- import { screen, render } from '@testing-library/react';
- import '@testing-library/jest-dom';
- import React from 'react';
- import userEvent from '@testing-library/user-event';
- 
- import Header from '.';
+import { screen, render } from '@testing-library/react';
+import '@testing-library/jest-dom';
+import React from 'react';
+import userEvent from '@testing-library/user-event';
+import { Provider } from 'react-redux'
+import store from '../../store'
+
+import Header from '.';
 import ShowCard from '.';
 
  describe("ShowCard", () => {
 
     beforeEach(() => {
-        render(<ShowCard data={{ summary: "Test description", name: "Test name"}}/>)
+        render(<Provider store={store}><ShowCard data={{ summary: "Test description", name: "Test name"}}/></Provider>)
     })
 
     it("Displays the appropriate description", () => {
@@ -38,10 +40,10 @@ import ShowCard from '.';
         const button = screen.queryByRole("button");
 
         expect(button.getAttribute("class")).toBe("");
-
+        //useEvent is an asynchronous function
         await userEvent.click(button);
 
-        expect(button.getAttribute("class")).toBe("saved");
+        expect(button.getAttribute("class")).toBe("saved"); //if it was any other tag, we would use expect(button.className).toBe("")
     })
 
  })

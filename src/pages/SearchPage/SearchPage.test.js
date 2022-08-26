@@ -13,11 +13,11 @@ import SearchPage from '.';
 describe("SearchPage", () => {
 
     it("Displays no shows if none are found", async () => {
-        jest.spyOn(axios, 'get').mockResolvedValueOnce({ data: [] });
+        jest.spyOn(axios, 'get').mockResolvedValueOnce({ data: [] }); //spyOn -> the next time axios does 'get', give it data instead
 
-        render(<BrowserRouter><SearchPage /></BrowserRouter>)
+        render(<BrowserRouter><SearchPage /></BrowserRouter>) //using router, so we need to wrap it in <BrowserRouter />
 
-        await waitForElementToBeRemoved(() => screen.queryByText('Loading...'))
+        await waitForElementToBeRemoved(() => screen.queryByText('Loading...')) //it's because this is set by useEffect
 
         const cards = screen.queryByRole("figure");
         expect(cards).toBe(null);
